@@ -38,6 +38,9 @@ try {
     process.exit(1);
 }
 
+// Setup
+Parse._require_base_path = parse_folder;
+
 // Register
 var parse_cloud_main_path = Path.join(parse_folder, 'cloud/main.js');
 var require_parse_cloud_main_path = './' + Path.relative(__dirname, parse_cloud_main_path);

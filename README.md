@@ -10,10 +10,13 @@ npm install parse-cloudcode-runner
 Note: You have to install Cloud Modules you used in the Cloud Function by yourself. (Like `underscore`)
 
 ### Change code
-Modify your `cloud/main.js` by adding following lines before calling `Parse`
+Modify your `cloud/main.js` by adding following lines before calling any `Parse` and `require` function.
 ```javascript
 if (typeof Parse === 'undefined') {
-    var Parse = require('parse-cloudcode-runner').Parse;
+    var parseCloudCodeRunner = require('parse-cloudcode-runner');
+    /*globals require: true */
+    require = parseCloudCodeRunner.require;
+    var Parse = parseCloudCodeRunner.Parse;
     Parse.initialize('YOUR_PARSE_APPLICATION_ID', 'YOUR_PARSE_JAVASCRIPT_KEY');
 }
 ```

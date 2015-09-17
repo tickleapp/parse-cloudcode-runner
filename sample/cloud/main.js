@@ -3,20 +3,29 @@
 
 'use strict';
 
-// NOTE: you have to install 'underscore' by yourself.
-var _ = require('underscore');
-
 if (typeof Parse === 'undefined') {
     /* Replace to
      * ```
-     * var Parse = require('parse-cloudcode-runner').Parse;
+     * var parseCloudCodeRunner = require('parse-cloudcode-runner');
      * ```
      * while using in your real code.
      */
-    var Parse = require('./../../index').Parse;
+    var parseCloudCodeRunner = require('./../../index');
+    /*globals require: true */
+    require = parseCloudCodeRunner.require;
+    var Parse = parseCloudCodeRunner.Parse;
+
     require('dotenv').load({silent: true});
     Parse.initialize(process.env.PARSE_APPLICATION_ID, process.env.PARSE_JAVASCRIPT_KEY);
 }
+
+// NOTE: you have to install 'underscore' by yourself.
+var _ = require('underscore');
+var math = require('cloud/math.js');
+
+Parse.Cloud.define('math', function(request, response) {
+    response.success(math.add((request.params.a || 1), (request.params.b || 1)));
+});
 
 Parse.Cloud.define('hello', function(request, response) {
   response.success(request.params);
