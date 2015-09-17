@@ -51,10 +51,14 @@ Options are
 
 ## Current support of `Parse.Cloud` module
 
+* Cloud modules (by (by [flovilmart/parse-develop](https://github.com/flovilmart/parse-develop))
 * function `Parse.Cloud.define`
+* function `Parse.Cloud.job`
 * function `Parse.Cloud.httpRequest` (by [flovilmart/parse-cloud](https://github.com/flovilmart/parse-cloud))
 * class `Parse.Cloud.FunctionRequest`
 * class `Parse.Cloud.FunctionResponse`
+* class `Parse.Cloud.JobRequest`
+* class `Parse.Cloud.JobStatus`
 
 ## TODO
 
