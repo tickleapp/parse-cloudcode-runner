@@ -33,6 +33,7 @@ var argv = require('yargs')
     .argv;
 var Path = require('path');
 var Parse = require('./index').Parse;
+var _ = require('lodash');
 
 // Process arguments
 var parseFolder = Path.normalize(Path.join(process.cwd(), argv.parsePath));
@@ -62,8 +63,10 @@ try {
 // Run
 try {
     Parse.Cloud.debugRun(functionName, params, functionType).then(function(response) {
+        console.log('Final output ' + _.repeat('=', 67));
         console.log(argv.jsonStringify ? JSON.stringify(response) : response);
     }, function(error) {
+        console.log('Error output ' + _.repeat('=', 67));
         console.error(argv.jsonStringify ? JSON.stringify(error) : error);
     });
 } catch (err) {
