@@ -38,9 +38,7 @@ Parse.Cloud.debugRun = function(name, params, functionType) {
     functionType = functionType || 'function';
 
     // Find function pool
-    var functionPool = undefined;
-    var functionArguments = undefined;
-    var promise = undefined;
+    var functionPool, functionArguments, promise;
     if (functionType === 'function') {
         functionPool = this._registeredFunctions;
         var response = new Parse.Cloud.FunctionResponse();
