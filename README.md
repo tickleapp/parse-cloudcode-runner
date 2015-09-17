@@ -4,7 +4,7 @@
 
 ### Install
 ```
-npm install parse-cloudcode-runner -g
+npm install parse-cloudcode-runner
 ```
 
 ### Change code
@@ -24,11 +24,11 @@ to load your Parse credentials from environment._
 ### Run
 Run your cloud code function by
 ```
-./runner.js <function name> [Options]
+parse-cloudcode-runner <function name> [Options]
 ```
 like
 ```
-./runner.js hello -p sample -a '{"answer": 42}'
+parse-cloudcode-runner hello -p sample -a '{"answer": 42}'
 ```
 
 Options are
