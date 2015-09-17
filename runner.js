@@ -31,8 +31,9 @@ var argv = require('yargs')
     .help('h')
     .alias('h', 'help')
     .argv;
-var Path = require('path');
+var clc = require('cli-color');
 var Parse = require('./index').Parse;
+var Path = require('path');
 var _ = require('lodash');
 
 // Process arguments
@@ -63,10 +64,10 @@ try {
 // Run
 try {
     Parse.Cloud.debugRun(functionName, params, functionType).then(function(response) {
-        console.log('Final output ' + _.repeat('=', 67));
+        console.log(clc.cyan('Final output ' + _.repeat('=', 67)));
         console.log(argv.jsonStringify ? JSON.stringify(response) : response);
     }, function(error) {
-        console.log('Error output ' + _.repeat('=', 67));
+        console.log(clc.red( 'Error output ' + _.repeat('=', 67)));
         console.error(argv.jsonStringify ? JSON.stringify(error) : error);
     });
 } catch (err) {

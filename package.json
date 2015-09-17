@@ -29,18 +29,19 @@
     "mocha": "^2.3.2"
   },
   "dependencies": {
-    "parse": "^1.6.3",
-    "parse-cloud": "0.0.82",
-    "yargs": "^3.25.0",
-    "lodash": "^3.10.1",
-    "parse-image": "0.0.4",
-    "underscore": "1.4.2",
-    "moment": "1.7.2",
     "applinks-metatag": "0.0.0",
+    "cli-color": "^1.0.0",
+    "lodash": "^3.10.1",
     "mailgun": "git://github.com/flovilmart/parse-mailgun#0.0.2-parse",
     "mandrill": "git://github.com/flovilmart/parse-mandrill#0.0.1-parse",
+    "moment": "1.7.2",
+    "parse": "^1.6.3",
+    "parse-cloud": "0.0.82",
+    "parse-image": "0.0.4",
     "sendgrid": "git://github.com/flovilmart/parse-sendgrid#0.0.1-parse",
     "stripe": "git://github.com/flovilmart/parse-stripe#2.5.0-parse",
-    "twilio": "1.6.0"
+    "twilio": "1.6.0",
+    "underscore": "1.4.2",
+    "yargs": "^3.25.0"
   }
 }
