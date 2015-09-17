@@ -31,15 +31,22 @@ parse-cloudcode-runner <function name> [Options]
 ```
 like
 ```
-parse-cloudcode-runner hello -p sample -a '{"answer": 42}'
+parse-cloudcode-runner hello -a '{"answer": 42}'
+```
+
+To run background jobs:
+```
+parse-cloudcode-runner worker -a '{"answer": 42}' -t job
 ```
 
 Options are
 ```
-  -p, --parse-path          Source root of your Parse app         [default: "."]
-  -a, --arguments           Arguments (JSON String)     [string] [default: "{}"]
-  -h, --help                Show help                                  [boolean]
-  -s, --json-stringify                                [boolean] [default: false]
+  -p, --parse-path      Source root of your Parse app             [default: "."]
+  -s, --json-stringify  Print result in JSON representation
+                                                      [boolean] [default: false]
+  -a, --arguments       Arguments (JSON String)         [string] [default: "{}"]
+  -t, --type            Type of function to run
+                     [string] [choices: "function", "job"] [default: "function"]
 ```
 
 ## Current support of `Parse.Cloud` module

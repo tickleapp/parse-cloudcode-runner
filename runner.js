@@ -11,7 +11,7 @@ var argv = require('yargs')
     })
     .option('s', {
         alias: 'json-stringify',
-        descibe: 'Print result in JSON representation',
+        describe: 'Print result in JSON representation',
         type: 'boolean',
         default: false
     })
@@ -23,7 +23,7 @@ var argv = require('yargs')
     })
     .option('t', {
         alias: 'type',
-        desribe: 'Type of function to run',
+        describe: 'Type of function to run',
         type: 'string',
         default: 'function',
         choices: ['function', 'job']
