@@ -7,10 +7,13 @@ var _ = require('lodash');
 module.exports.Parse = Parse;
 
 // Patch `require` for CloudCode
-Parse._require_base_path = undefined;
+Parse._requireBasePath = undefined;
+Parse.setRequireBasePath = function(requireBasePath) {
+    this._requireBasePath = requireBasePath;
+};
 module.exports.require = function(id) {
     if (_.startsWith(id, 'cloud/')) {
-        id = Path.join(Parse._require_base_path, id);
+        id = Path.join(Parse._requireBasePath, id);
     }
     return require(id);
 };
@@ -41,8 +44,8 @@ Parse.Cloud.debugRun = function(name, params, functionType) {
     }
 
     // Get function
-    var cloud_function = functionPool[name];
-    if (typeof cloud_function === 'undefined') {
+    var functionBody = functionPool[name];
+    if (typeof functionBody === 'undefined') {
         throw 'Cannot find ' + functionType + ' named "' + name + '".';
     }
 
@@ -61,7 +64,7 @@ Parse.Cloud.debugRun = function(name, params, functionType) {
         console.error('Unknown function type: ' + functionType);
         process.exit(1);
     }
-    cloud_function.apply(_.assign({Parse: Parse}, global), functionArguments);
+    functionBody.apply(_.assign({Parse: Parse}, global), functionArguments);
     return promise;
 };
 

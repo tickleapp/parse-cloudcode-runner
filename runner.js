@@ -35,9 +35,9 @@ var Path = require('path');
 var Parse = require('./index').Parse;
 
 // Process arguments
-var parse_folder = Path.normalize(Path.join(process.cwd(), argv.parsePath));
-var function_name = argv._[0];
-var function_type = argv.type;
+var parseFolder = Path.normalize(Path.join(process.cwd(), argv.parsePath));
+var functionName = argv._[0];
+var functionType = argv.type;
 try {
     var params = JSON.parse(argv.arguments);
 } catch (err) {
@@ -47,22 +47,21 @@ try {
 }
 
 // Setup
-Parse._require_base_path = parse_folder;
+Parse.setRequireBasePath(parseFolder);
 
 // Register
-var parse_cloud_main_path = Path.join(parse_folder, 'cloud/main.js');
-var require_parse_cloud_main_path = './' + Path.relative(__dirname, parse_cloud_main_path);
+var parseCloudMainPath = Path.join(parseFolder, 'cloud/main.js');
 try {
-    require(require_parse_cloud_main_path);
+    require('./' + Path.relative(__dirname, parseCloudMainPath));
 } catch (err) {
-    console.error('Cannot load "' + parse_folder + '".');
+    console.error('Cannot load "' + parseFolder + '".');
     console.error(err);
     process.exit(1);
 }
 
 // Run
 try {
-    Parse.Cloud.debugRun(function_name, params, function_type).then(function(response) {
+    Parse.Cloud.debugRun(functionName, params, functionType).then(function(response) {
         console.log(argv.jsonStringify ? JSON.stringify(response) : response);
     }, function(error) {
         console.error(argv.jsonStringify ? JSON.stringify(error) : error);
