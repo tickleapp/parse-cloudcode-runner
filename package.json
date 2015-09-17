@@ -1,0 +1,29 @@
+{
+  "name": "parse-cloudcode-runner",
+  "version": "0.0.1",
+  "description": "A local runner of Parse CloudCode",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tickleapp/parse-cloudcode-runner.git"
+  },
+  "author": "sodastsai",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/tickleapp/parse-cloudcode-runner/issues"
+  },
+  "homepage": "https://github.com/tickleapp/parse-cloudcode-runner#readme",
+  "devDependencies": {
+    "chai": "^3.2.0",
+    "dotenv": "^1.2.0",
+    "mocha": "^2.3.2"
+  },
+  "dependencies": {
+    "parse": "^1.6.3",
+    "parse-cloud": "0.0.82",
+    "yargs": "^3.25.0"
+  }
+}
