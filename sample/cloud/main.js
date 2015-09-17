@@ -26,6 +26,10 @@ Parse.Cloud.job('worker', function(request, status) {
     status.success('xd');
 });
 
+Parse.Cloud.define('name', function(request, response) {
+    response.success(math.name);
+});
+
 Parse.Cloud.define('math', function(request, response) {
     console.log('get ' + request.body);
     response.success(math.add((request.params.a || 1), (request.params.b || 1)));

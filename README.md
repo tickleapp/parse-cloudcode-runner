@@ -12,7 +12,6 @@ Modify your `cloud/main.js` by adding following lines before calling any `Parse`
 ```javascript
 if (typeof Parse === 'undefined') {
     var parseCloudCodeRunner = require('parse-cloudcode-runner');
-    /*globals require: true */
     require = parseCloudCodeRunner.require;
     var Parse = parseCloudCodeRunner.Parse;
     Parse.initialize('YOUR_PARSE_APPLICATION_ID', 'YOUR_PARSE_JAVASCRIPT_KEY');
@@ -23,6 +22,23 @@ you have to import it by yourself. Check `sample/cloud/main.js` for example.)
 
 _Note: you could use [motdotla/dotenv](https://github.com/motdotla/dotenv)
 to load your Parse credentials from environment._
+
+In other `.js` files where you would use `require` function, you may also prepend following lines to
+patch `require` function. (patch to make it work as same as the one in Cloud Code.)
+```javascript
+if (typeof Parse === 'undefined') {
+    require = require('parse-cloudcode-runner').require;
+}
+```
+
+Btw, if you also need `Parse` global object in other `.js` files:
+```javascript
+if (typeof Parse === 'undefined') {
+    var parseCloudCodeRunner = require('parse-cloudcode-runner');
+    require = parseCloudCodeRunner.require;
+    var Parse = parseCloudCodeRunner.Parse;
+}
+```
 
 ### Run
 Run your cloud code function by
