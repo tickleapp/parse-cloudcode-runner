@@ -38,9 +38,21 @@ Parse.Cloud.debugRun = function(name, params, functionType) {
     functionType = functionType || 'function';
 
     // Find function pool
-    var functionPool = this._registeredFunctions;
-    if (functionType === 'job') {
+    var functionPool = undefined;
+    var functionArguments = undefined;
+    var promise = undefined;
+    if (functionType === 'function') {
+        functionPool = this._registeredFunctions;
+        var response = new Parse.Cloud.FunctionResponse();
+        functionArguments = [new Parse.Cloud.FunctionRequest(params), response];
+        promise = response.promise;
+    } else if (functionType === 'job') {
         functionPool = this._registeredJobs;
+        var status = new Parse.Cloud.JobStatus();
+        functionArguments = [new Parse.Cloud.JobRequest(params), status];
+        promise = status.promise;
+    } else {
+        throw 'Unknown function type: ' + functionType;
     }
 
     // Get function
@@ -50,20 +62,6 @@ Parse.Cloud.debugRun = function(name, params, functionType) {
     }
 
     // Go!
-    var functionArguments = [];
-    var promise = undefined;
-    if (functionType === 'function') {
-        var response = new Parse.Cloud.FunctionResponse();
-        functionArguments = [new Parse.Cloud.FunctionRequest(params), response];
-        promise = response.promise;
-    } else if (functionType === 'job') {
-        var status = new Parse.Cloud.JobStatus();
-        functionArguments = [new Parse.Cloud.JobRequest(params), status];
-        promise = status.promise;
-    } else {
-        console.error('Unknown function type: ' + functionType);
-        process.exit(1);
-    }
     functionBody.apply(_.assign({Parse: Parse}, global), functionArguments);
     return promise;
 };
@@ -79,7 +77,7 @@ Parse.Cloud.FunctionRequest = function(params) {
 Parse.Cloud.FunctionResponse = function() {
     this.promise = new Parse.Promise();
     this.error = function(message) {
-        this.promise.reject({code: 141, error: message});
+        this.promise.reject({code: Parse.Error.SCRIPT_FAILED, error: message});
     };
     this.success = function(response) {
         this.promise.resolve({result: response});
