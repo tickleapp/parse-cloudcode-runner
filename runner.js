@@ -2,37 +2,39 @@
 'use strict';
 
 var argv = require('yargs')
-    .usage('Usage: $0 [<parse cloud path>] <function name> [<json parameters>] [--json-stringify]')
-    .demand(1)
-    .boolean('s')
-    .alias('s', 'json-stringify')
-    .describe('s', 'Print result in JSON representation')
+    .usage('Usage: $0 <function name> [Options]')
+    .demand(1, 'You should specify a function name')
+    .option('p', {
+        alias: 'parse-path',
+        describe: 'Source root of your Parse app',
+        default: '.'
+    })
+    .option('s', {
+        alias: 'json-stringify',
+        descibe: 'Print result in JSON representation',
+        type: 'boolean',
+        default: false
+    })
+    .option('a', {
+        alias: 'arguments',
+        describe: 'Arguments (JSON String)',
+        type: 'string',
+        default: '{}'
+    })
     .help('h')
     .alias('h', 'help')
     .argv;
 var Path = require('path');
 var Parse = require('./index').Parse;
 
-if (argv._.length === 1) {
-    var parse_folder = process.cwd();
-    var function_name = argv._[0];
-    var params = undefined;
-} else if (argv._.length === 2) {
-    var parse_folder = argv._[0];
-    var function_name = argv._[1];
-    var params = undefined;
-} else if (argv._.length === 3) {
-    var parse_folder = argv._[0];
-    var function_name = argv._[1];
-    try {
-        var params = JSON.parse(argv._[2]);
-    } catch (err) {
-        console.error('Cannot parse JSON parameters. Got:\n' + argv._[2]);
-        console.error(err);
-        process.exit(1);
-    }
-} else {
-    console.error('Too many arguments');
+// Process arguments
+var parse_folder = Path.normalize(Path.join(process.cwd(), argv.parsePath));
+var function_name = argv._[0];
+try {
+    var params = JSON.parse(argv.arguments);
+} catch (err) {
+    console.error('Failed to parse arguments.');
+    console.error(err);
     process.exit(1);
 }
 

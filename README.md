@@ -15,7 +15,7 @@ if (typeof Parse === 'undefined') {
     Parse.initialize('YOUR_PARSE_APPLICATION_ID', 'YOUR_PARSE_JAVASCRIPT_KEY');
 }
 ```
-(In Parse's CloudCode environment, `Parse` is globally available. But in local development environment, 
+(In Parse's CloudCode environment, `Parse` is globally available. But in local development environment,
 you have to import it by yourself. Check `sample/cloud/main.js` for example.)
 
 _Note: you could use [motdotla/dotenv](https://github.com/motdotla/dotenv)
@@ -24,16 +24,19 @@ to load your Parse credentials from environment._
 ### Run
 Run your cloud code function by
 ```
-./runner.js [parse source root] [cloud function name] [argument in json]
+./runner.js <function name> [Options]
 ```
 like
 ```
-./runner.js sample hello '{"answer": 42}'
+./runner.js hello -p sample -a '{"answer": 42}'
 ```
-or if your `cwd` is at the source root of your Parse app and you don't have to put any arguments
-for your function, then just
+
+Options are
 ```
-./runner.js [cloud function name]
+  -p, --parse-path          Source root of your Parse app         [default: "."]
+  -a, --arguments           Arguments (JSON String)     [string] [default: "{}"]
+  -h, --help                Show help                                  [boolean]
+  -s, --json-stringify                                [boolean] [default: false]
 ```
 
 ## Current support of `Parse.Cloud` module
