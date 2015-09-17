@@ -19,9 +19,12 @@ if (typeof Parse === 'undefined') {
     Parse.initialize(process.env.PARSE_APPLICATION_ID, process.env.PARSE_JAVASCRIPT_KEY);
 }
 
-// NOTE: you have to install 'underscore' by yourself.
 var _ = require('underscore');
 var math = require('cloud/math.js');
+
+Parse.Cloud.job('worker', function(request, status) {
+    status.success('xd');
+});
 
 Parse.Cloud.define('math', function(request, response) {
     response.success(math.add((request.params.a || 1), (request.params.b || 1)));
@@ -29,6 +32,10 @@ Parse.Cloud.define('math', function(request, response) {
 
 Parse.Cloud.define('hello', function(request, response) {
   response.success(request.params);
+});
+
+Parse.Cloud.define('this', function(request, response) {
+  response.success(this);
 });
 
 Parse.Cloud.define('httpbin', function(request, response) {

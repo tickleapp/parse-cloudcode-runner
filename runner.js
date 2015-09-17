@@ -21,6 +21,13 @@ var argv = require('yargs')
         type: 'string',
         default: '{}'
     })
+    .option('t', {
+        alias: 'type',
+        desribe: 'Type of function to run',
+        type: 'string',
+        default: 'function',
+        choices: ['function', 'job']
+    })
     .help('h')
     .alias('h', 'help')
     .argv;
@@ -30,6 +37,7 @@ var Parse = require('./index').Parse;
 // Process arguments
 var parse_folder = Path.normalize(Path.join(process.cwd(), argv.parsePath));
 var function_name = argv._[0];
+var function_type = argv.type;
 try {
     var params = JSON.parse(argv.arguments);
 } catch (err) {
@@ -47,14 +55,14 @@ var require_parse_cloud_main_path = './' + Path.relative(__dirname, parse_cloud_
 try {
     require(require_parse_cloud_main_path);
 } catch (err) {
-    console.error('Cannot load cloud functions from "' + parse_folder + '".');
+    console.error('Cannot load "' + parse_folder + '".');
     console.error(err);
     process.exit(1);
 }
 
 // Run
 try {
-    Parse.Cloud.debugRun(function_name, params).then(function(response) {
+    Parse.Cloud.debugRun(function_name, params, function_type).then(function(response) {
         console.log(argv.jsonStringify ? JSON.stringify(response) : response);
     }, function(error) {
         console.error(argv.jsonStringify ? JSON.stringify(error) : error);
