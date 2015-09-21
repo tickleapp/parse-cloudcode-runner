@@ -17,6 +17,7 @@
 
 'use strict';
 
+require('dotenv').load({silent: true});
 var argv = require('yargs')
     .usage('Usage: $0 <function name> [Options]')
     .demand(1, 'You should specify a function name')
@@ -53,6 +54,14 @@ var Path = require('path');
 var _ = require('lodash');
 
 var runner = require('./index');
+
+// Setup Parse if it's ready
+if ((process.env.PARSE_APPLICATION_ID && process.env.PARSE_JAVASCRIPT_KEY) &&
+    (!runner.Parse.applicationId || !runner.Parse.javaScriptKey)) {
+    runner.Parse.initialize(runner.Parse.applicationId || process.env.PARSE_APPLICATION_ID,
+                            runner.Parse.javaScriptKey || process.env.PARSE_JAVASCRIPT_KEY,
+                            runner.Parse.masterKey || process.env.PARSE_MASTER_KEY || undefined);
+}
 
 // Process arguments
 var parseFolder = Path.normalize(Path.join(process.cwd(), argv.parsePath));

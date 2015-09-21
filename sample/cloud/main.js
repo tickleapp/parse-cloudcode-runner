@@ -6,11 +6,20 @@
 var _ = require('underscore');
 var math = require('cloud/math.js');
 
-if (!Parse.applicationId || !Parse.javaScriptKey) {
-    require('dotenv').load({silent: true});
-    Parse.initialize(Parse.applicationId || process.env.PARSE_APPLICATION_ID,
-                     Parse.javaScriptKey || process.env.PARSE_JAVASCRIPT_KEY);
-}
+/*
+ * Setup Parse credentials if necessary.
+ *
+ * If you put them in ENVIRONMENT directly, the runner would fetch it automatically.
+ * Keys of ENVIROMENT would be:
+ *   - PARSE_APPLICATION_ID
+ *   - PARSE_JAVASCRIPT_KEY
+ *   - PARSE_MASTER_KEY (optional)
+ *
+ * Or you could just setup it by following lines:
+ */
+// if (!Parse.applicationId || !Parse.javaScriptKey) {
+//     Parse.initialize('YOUR_PARSE_APPLICATION_ID', 'YOUR_PARSE_JAVASCRIPT_KEY');
+// }
 
 Parse.Cloud.job('worker', function(request, status) {
     status.success('xd');

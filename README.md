@@ -7,18 +7,14 @@
 npm install parse-cloudcode-runner
 ```
 
-### Change code
-Modify your `cloud/main.js` for initializing Parse keys
-```javascript
-if (!Parse.applicationId || !Parse.javaScriptKey) {
-    Parse.initialize(Parse.applicationId || 'YOUR_PARSE_APPLICATION_ID',
-                     Parse.javaScriptKey || 'YOUR_PARSE_JAVASCRIPT_KEY');
-}
-```
+### Set Parse credentials
+If you put them in ENVIRONMENT directly, the runner would fetch it automatically.
+Keys of ENVIROMENT would be:
+  - PARSE_APPLICATION_ID
+  - PARSE_JAVASCRIPT_KEY
+  - PARSE_MASTER_KEY (optional)
 
-_Note: you could use [motdotla/dotenv](https://github.com/motdotla/dotenv)
-to load your Parse credentials from environment like in `sample/cloud/main.js`._
-
+Or you could check `sample/cloud/main.js` for about how to set them.
 
 ### Run
 Run your cloud code function by
