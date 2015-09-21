@@ -48,9 +48,11 @@ var argv = require('yargs')
     .alias('h', 'help')
     .argv;
 var clc = require('cli-color');
-var Parse = require('./index').Parse;
+var Module = require('module').Module;
 var Path = require('path');
 var _ = require('lodash');
+
+var runner = require('./index');
 
 // Process arguments
 var parseFolder = Path.normalize(Path.join(process.cwd(), argv.parsePath));
@@ -64,22 +66,32 @@ try {
     process.exit(1);
 }
 
-// Setup
-Parse.setRequireBasePath(parseFolder);
+// Inject global.Parse and modify `require` paths
+var _originalParse = global.Parse;
+var _originalNodePath = process.env.NODE_PATH;
+global.Parse = runner.Parse;
+// Include local node_modules for CloudModules
+var alteredPath = Path.join(__dirname, 'node_modules/') + ':' + parseFolder;
+if (process.env.NODE_PATH) {
+    process.env.NODE_PATH += ':' + alteredPath;
+} else {
+    process.env.NODE_PATH = alteredPath;
+}
+Module._initPaths();
 
 // Register
 var parseCloudMainPath = Path.join(parseFolder, 'cloud/main.js');
 try {
     require('./' + Path.relative(__dirname, parseCloudMainPath));
 } catch (err) {
-    console.error('Cannot load "' + parseFolder + '".');
+    console.error('Cannot load `cloud/main.js` from ' + parseFolder);
     console.error(err);
     process.exit(1);
 }
 
 // Run
 try {
-    Parse.Cloud.debugRun(functionName, params, functionType).then(function(response) {
+    runner.Parse.Cloud.debugRun(functionName, params, functionType).then(function(response) {
         console.log(clc.cyan('Final output ' + _.repeat('=', 67)));
         console.log(argv.jsonStringify ? JSON.stringify(response) : response);
     }, function(error) {
@@ -90,3 +102,8 @@ try {
     console.error(err);
     process.exit(1);
 }
+
+// Revert global.Parse and modify `require` paths
+global.Parse = _originalParse;
+process.env.NODE_PATH = _originalNodePath;
+Module._initPaths();

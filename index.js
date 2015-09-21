@@ -18,21 +18,8 @@
 
 var Parse_ParseCloud = require('parse-cloud').Parse;
 var Parse = require('parse/node');
-var Path = require('path');
 var _ = require('lodash');
 module.exports.Parse = Parse;
-
-// Patch `require` for CloudCode
-Parse._requireBasePath = undefined;
-Parse.setRequireBasePath = function(requireBasePath) {
-    this._requireBasePath = requireBasePath;
-};
-module.exports.require = function(id) {
-    if (_.startsWith(id, 'cloud/')) {
-        id = Path.join(Parse._requireBasePath, id);
-    }
-    return require(id);
-};
 
 // Borrow Parse.Cloud.httpRequest from parse-cloud
 Parse.Cloud.httpRequest = Parse_ParseCloud.Cloud.httpRequest;

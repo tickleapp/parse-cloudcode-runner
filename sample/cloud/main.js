@@ -3,24 +3,14 @@
 
 'use strict';
 
-if (typeof Parse === 'undefined') {
-    /* Replace to
-     * ```
-     * var parseCloudCodeRunner = require('parse-cloudcode-runner');
-     * ```
-     * while using in your real code.
-     */
-    var parseCloudCodeRunner = require('./../../index');
-    /*globals require: true */
-    require = parseCloudCodeRunner.require;
-    var Parse = parseCloudCodeRunner.Parse;
-
-    require('dotenv').load({silent: true});
-    Parse.initialize(process.env.PARSE_APPLICATION_ID, process.env.PARSE_JAVASCRIPT_KEY);
-}
-
 var _ = require('underscore');
 var math = require('cloud/math.js');
+
+if (!Parse.applicationId || !Parse.javaScriptKey) {
+    require('dotenv').load({silent: true});
+    Parse.initialize(Parse.applicationId || process.env.PARSE_APPLICATION_ID,
+                     Parse.javaScriptKey || process.env.PARSE_JAVASCRIPT_KEY);
+}
 
 Parse.Cloud.job('worker', function(request, status) {
     status.success('xd');
