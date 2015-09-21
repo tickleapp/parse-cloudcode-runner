@@ -10,9 +10,9 @@ npm install parse-cloudcode-runner
 ### Set Parse credentials
 If you put them in ENVIRONMENT directly, the runner would fetch it automatically.
 Keys of ENVIROMENT would be:
-  - PARSE_APPLICATION_ID
-  - PARSE_JAVASCRIPT_KEY
-  - PARSE_MASTER_KEY (optional)
+  - `PARSE_APPLICATION_ID`
+  - `PARSE_JAVASCRIPT_KEY`
+  - `PARSE_MASTER_KEY` _(optional)_
 
 Or you could check `sample/cloud/main.js` for about how to set them.
 
