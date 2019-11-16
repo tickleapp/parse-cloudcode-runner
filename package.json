@@ -34,7 +34,7 @@
     "lodash": "^3.10.1",
     "mailgun": "git://github.com/flovilmart/parse-mailgun#0.0.2-parse",
     "mandrill": "git://github.com/flovilmart/parse-mandrill#0.0.1-parse",
-    "moment": "1.7.2",
+    "moment": "2.24.0",
     "parse": "^1.6.3",
     "parse-cloud": "0.0.82",
     "parse-image": "0.0.4",
