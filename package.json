@@ -35,7 +35,7 @@
     "mailgun": "git://github.com/flovilmart/parse-mailgun#0.0.2-parse",
     "mandrill": "git://github.com/flovilmart/parse-mandrill#0.0.1-parse",
     "moment": "1.7.2",
-    "parse": "^1.6.3",
+    "parse": "^2.15.0",
     "parse-cloud": "0.0.82",
     "parse-image": "0.0.4",
     "sendgrid": "git://github.com/flovilmart/parse-sendgrid#0.0.1-parse",
